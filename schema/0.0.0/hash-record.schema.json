@@ -1,0 +1,109 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://raw.githubusercontent.com/rin00159/hash-record-schema/refs/heads/main/schema/0.0.0/hash-record.schema.json",
+	"type": "object",
+	"title": "Hash Record",
+	"description": "データに対応するhashをRecord形式で記述可能。準拠先`暗号学的Hash:CycloneDX 非暗号学的Hash:SPDX CRC-32:追加で仕様を一意にするためのidへのsuffix` その上でメジャーなhash種別については簡単なバリデーションを指定している",
+	"properties": {
+		"MD4": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{32}$",
+			"description": "[レガシー] MD4 (128-bit) - 現在は非推奨。過去の互換性目的のみに使用"
+		},
+		"MD5": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{32}$",
+			"description": "[レガシー] MD5 (128-bit) - 暗号用途としては非推奨。ファイル破損の簡易チェック用途"
+		},
+		"RIPEMD-160": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{40}$",
+			"description": "[レガシー] RIPEMD-160 (160-bit) - 過去のPGPやBitcoin初期互換用"
+		},
+		"SHA-1": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{40}$",
+			"description": "[過去の標準] SHA-1 (160-bit) - 衝突攻撃が実証済みのため新規採用は非推奨"
+		},
+		"SHA-256": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{64}$",
+			"description": "[現在の標準] SHA-256 (256-bit) - 推奨されるデファクトスタンダード"
+		},
+		"SHA-384": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{96}$",
+			"description": "[現在の標準] SHA-384 (384-bit) - WebのSRI（Subresource Integrity）等で広く利用される標準"
+		},
+		"SHA-512": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{128}$",
+			"description": "[現在の標準] SHA-512 (512-bit) - より強固な検証が求められる場合に使用"
+		},
+		"SHA-512/256": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{64}$",
+			"description": "[現在の標準] SHA-512/256 (256-bit) - 64bit環境で高速かつLength Extension Attack耐性を持つ"
+		},
+		"BLAKE2b-512": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{128}$",
+			"description": "[高速,モダン] BLAKE2b (通常 512-bit) - ソフトウェア的にSHA-2/3より高速"
+		},
+		"BLAKE2s-256": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{64}$",
+			"description": "[高速,モダン] BLAKE2s (通常 256-bit) - 32bit環境向けに最適化された高速アルゴリズム"
+		},
+		"BLAKE3": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{64}$",
+			"description": "[高速,モダン] BLAKE3 (標準 256-bit) - MD5等を圧倒する速度と高い安全性を持つ"
+		},
+		"SHA3-256": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{64}$",
+			"description": "[新標準] SHA3-256 (256-bit) - SHA-2系と異なる構造（Keccak）を持つNISTの最新標準"
+		},
+		"SHA3-512": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{128}$",
+			"description": "[新標準] SHA3-512 (512-bit) - 最高レベルの耐性を持つNISTの最新標準"
+		},
+		"SM3": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{64}$",
+			"description": "[国家,特定標準] SM3 (256-bit) - 中国国家標準。グローバル要件やSBOM等で利用"
+		},
+		"CRC32-ISO3309": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{8}$",
+			"description": "[ISO/IEC 3309 / ITU-T V.42 / POSIX] CRC-32 (ZIP, gzip, PNG等の標準多項式 0x04C11DB7)"
+		},
+		"CRC32-C": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{8}$",
+			"description": "[RFC 3720 / iSCSI] CRC-32C (Castagnoli多項式 0x1EDC6F41、CPU命令/クラウドストレージ向け)"
+		},
+		"ADLER32": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{8}$",
+			"description": "[非暗号,超高速] Adler-32 (32-bit) - zlib等で使われるCRC32より高速なチェックサム（SPDX等で採用）"
+		},
+		"XXHASH32": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{8}$",
+			"description": "[非暗号,超爆速] xxHash32 (32-bit) - メモリ速度の限界に近い速度で処理できるモダンな非暗号学的ハッシュ"
+		},
+		"XXHASH64": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{16}$",
+			"description": "[非暗号,超爆速] xxHash64 (64-bit) - 64bitアーキテクチャ向けに最適化された高速ハッシュ"
+		},
+		"XXH3-128": {
+			"type": "string",
+			"pattern": "^[a-fA-F0-9]{32}$",
+			"description": "[非暗号,超爆速] XXH3 (128-bit) - xxHashファミリの最新版。高速かつ衝突確率を極限まで下げたデファクト"
+		}
+	}
+}
