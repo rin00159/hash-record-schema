@@ -1,5 +1,3 @@
-# JSONSchema-Expansion:Extends
-継承関係
 ## Usage
 
 ## License

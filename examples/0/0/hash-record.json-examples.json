@@ -1,0 +1,843 @@
+{
+	"$schema": "./schema/hash-record.json-examples.schema.json",
+	"jsons": [
+		{
+			"group": "basic",
+			"label": "正常: 暗号学的ハッシュを複数併記",
+			"valid": true,
+			"instance": {
+				"MD5": "5d41402abc4b2a76b9719d911017c592",
+				"SHA-1": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+				"SHA-256": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+				"SHA-512": "9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caadae2dff72519673ca72323c3d99ba5c11d7c7acc6e14b8c5da0c4663475c2e5c3adef46f73bcdec043"
+			}
+		},
+		{
+			"group": "basic",
+			"label": "正常: 推奨ハッシュ(SHA-256)と非暗号学的ハッシュ(CRC32)の併用",
+			"valid": true,
+			"instance": {
+				"SHA-256": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+				"CRC32-ISO3309": "3610a686"
+			}
+		},
+		{
+			"group": "property:root",
+			"label": "正常: 空オブジェクト",
+			"valid": true,
+			"instance": {}
+		},
+		{
+			"group": "property:root",
+			"label": "正常: 未定義のハッシュ種別も許可(additionalProperties 制限なし)",
+			"valid": true,
+			"instance": {
+				"WHIRLPOOL": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property:root",
+			"label": "オブジェクト以外は不可",
+			"valid": false,
+			"instance": [
+				"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+			],
+			"expectedErrors": [
+				{
+					"instanceLocation": "",
+					"keyword": "type"
+				}
+			]
+		},
+		{
+			"group": "property:root",
+			"groupPointer": "/propertyNames",
+			"label": "正常: BLAKE2b / BLAKE2s は小文字を含む表記",
+			"valid": true,
+			"instance": {
+				"BLAKE2b-512": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property:root",
+			"groupPointer": "/propertyNames",
+			"label": "キーの表記揺れ(Sha-256)は不可",
+			"valid": false,
+			"instance": {
+				"Sha-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "",
+					"keyword": "propertyNames"
+				}
+			]
+		},
+		{
+			"group": "property:root",
+			"groupPointer": "/propertyNames",
+			"label": "キーの小文字表記(md5)は不可",
+			"valid": false,
+			"instance": {
+				"md5": "0123456789abcdef0123456789abcdef"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "",
+					"keyword": "propertyNames"
+				}
+			]
+		},
+		{
+			"group": "property:root",
+			"groupPointer": "/propertyNames",
+			"label": "キーのアンダースコア区切り(SHA_256)は不可",
+			"valid": false,
+			"instance": {
+				"SHA_256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "",
+					"keyword": "propertyNames"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/MD4",
+			"pointer": "/MD4",
+			"label": "正常: MD4 は 32 桁の16進数",
+			"valid": true,
+			"instance": {
+				"MD4": "0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/MD4",
+			"pointer": "/MD4",
+			"label": "MD4 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"MD4": "0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/MD4",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/MD5",
+			"pointer": "/MD5",
+			"label": "正常: MD5 は 32 桁の16進数",
+			"valid": true,
+			"instance": {
+				"MD5": "0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/MD5",
+			"pointer": "/MD5",
+			"label": "MD5 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"MD5": "0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/MD5",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/RIPEMD-160",
+			"pointer": "/RIPEMD-160",
+			"label": "正常: RIPEMD-160 は 40 桁の16進数",
+			"valid": true,
+			"instance": {
+				"RIPEMD-160": "0123456789abcdef0123456789abcdef01234567"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/RIPEMD-160",
+			"pointer": "/RIPEMD-160",
+			"label": "RIPEMD-160 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"RIPEMD-160": "0123456789abcdef0123456789abcdef0123456"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/RIPEMD-160",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-1",
+			"pointer": "/SHA-1",
+			"label": "正常: SHA-1 は 40 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SHA-1": "0123456789abcdef0123456789abcdef01234567"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-1",
+			"pointer": "/SHA-1",
+			"label": "SHA-1 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SHA-1": "0123456789abcdef0123456789abcdef0123456"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA-1",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-256",
+			"pointer": "/SHA-256",
+			"label": "正常: SHA-256 は 64 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SHA-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-256",
+			"pointer": "/SHA-256",
+			"label": "SHA-256 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SHA-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA-256",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-384",
+			"pointer": "/SHA-384",
+			"label": "正常: SHA-384 は 96 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SHA-384": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-384",
+			"pointer": "/SHA-384",
+			"label": "SHA-384 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SHA-384": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA-384",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-512",
+			"pointer": "/SHA-512",
+			"label": "正常: SHA-512 は 128 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SHA-512": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-512",
+			"pointer": "/SHA-512",
+			"label": "SHA-512 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SHA-512": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA-512",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-512~1256",
+			"pointer": "/SHA-512~1256",
+			"label": "正常: SHA-512/256 は 64 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SHA-512/256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-512~1256",
+			"pointer": "/SHA-512~1256",
+			"label": "SHA-512/256 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SHA-512/256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA-512~1256",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA3-256",
+			"pointer": "/SHA3-256",
+			"label": "正常: SHA3-256 は 64 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SHA3-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA3-256",
+			"pointer": "/SHA3-256",
+			"label": "SHA3-256 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SHA3-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA3-256",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA3-384",
+			"pointer": "/SHA3-384",
+			"label": "正常: SHA3-384 は 96 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SHA3-384": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA3-384",
+			"pointer": "/SHA3-384",
+			"label": "SHA3-384 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SHA3-384": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA3-384",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA3-512",
+			"pointer": "/SHA3-512",
+			"label": "正常: SHA3-512 は 128 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SHA3-512": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA3-512",
+			"pointer": "/SHA3-512",
+			"label": "SHA3-512 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SHA3-512": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA3-512",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE2b-256",
+			"pointer": "/BLAKE2b-256",
+			"label": "正常: BLAKE2b-256 は 64 桁の16進数",
+			"valid": true,
+			"instance": {
+				"BLAKE2b-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE2b-256",
+			"pointer": "/BLAKE2b-256",
+			"label": "BLAKE2b-256 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"BLAKE2b-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/BLAKE2b-256",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE2b-384",
+			"pointer": "/BLAKE2b-384",
+			"label": "正常: BLAKE2b-384 は 96 桁の16進数",
+			"valid": true,
+			"instance": {
+				"BLAKE2b-384": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE2b-384",
+			"pointer": "/BLAKE2b-384",
+			"label": "BLAKE2b-384 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"BLAKE2b-384": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/BLAKE2b-384",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE2b-512",
+			"pointer": "/BLAKE2b-512",
+			"label": "正常: BLAKE2b-512 は 128 桁の16進数",
+			"valid": true,
+			"instance": {
+				"BLAKE2b-512": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE2b-512",
+			"pointer": "/BLAKE2b-512",
+			"label": "BLAKE2b-512 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"BLAKE2b-512": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/BLAKE2b-512",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE2s-256",
+			"pointer": "/BLAKE2s-256",
+			"label": "正常: BLAKE2s-256 は 64 桁の16進数",
+			"valid": true,
+			"instance": {
+				"BLAKE2s-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE2s-256",
+			"pointer": "/BLAKE2s-256",
+			"label": "BLAKE2s-256 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"BLAKE2s-256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/BLAKE2s-256",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE3",
+			"pointer": "/BLAKE3",
+			"label": "正常: BLAKE3 は 64 桁の16進数",
+			"valid": true,
+			"instance": {
+				"BLAKE3": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE3",
+			"pointer": "/BLAKE3",
+			"label": "BLAKE3 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"BLAKE3": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/BLAKE3",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SM3",
+			"pointer": "/SM3",
+			"label": "正常: SM3 は 64 桁の16進数",
+			"valid": true,
+			"instance": {
+				"SM3": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SM3",
+			"pointer": "/SM3",
+			"label": "SM3 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"SM3": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SM3",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/CRC32-ISO3309",
+			"pointer": "/CRC32-ISO3309",
+			"label": "正常: CRC32-ISO3309 は 8 桁の16進数",
+			"valid": true,
+			"instance": {
+				"CRC32-ISO3309": "01234567"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/CRC32-ISO3309",
+			"pointer": "/CRC32-ISO3309",
+			"label": "CRC32-ISO3309 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"CRC32-ISO3309": "0123456"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/CRC32-ISO3309",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/CRC32-C",
+			"pointer": "/CRC32-C",
+			"label": "正常: CRC32-C は 8 桁の16進数",
+			"valid": true,
+			"instance": {
+				"CRC32-C": "01234567"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/CRC32-C",
+			"pointer": "/CRC32-C",
+			"label": "CRC32-C は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"CRC32-C": "0123456"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/CRC32-C",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/ADLER32",
+			"pointer": "/ADLER32",
+			"label": "正常: ADLER32 は 8 桁の16進数",
+			"valid": true,
+			"instance": {
+				"ADLER32": "01234567"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/ADLER32",
+			"pointer": "/ADLER32",
+			"label": "ADLER32 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"ADLER32": "0123456"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/ADLER32",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/XXH32",
+			"pointer": "/XXH32",
+			"label": "正常: XXH32 は 8 桁の16進数",
+			"valid": true,
+			"instance": {
+				"XXH32": "01234567"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/XXH32",
+			"pointer": "/XXH32",
+			"label": "XXH32 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"XXH32": "0123456"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/XXH32",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/XXH64",
+			"pointer": "/XXH64",
+			"label": "正常: XXH64 は 16 桁の16進数",
+			"valid": true,
+			"instance": {
+				"XXH64": "0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/XXH64",
+			"pointer": "/XXH64",
+			"label": "XXH64 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"XXH64": "0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/XXH64",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/XXH3-64",
+			"pointer": "/XXH3-64",
+			"label": "正常: XXH3-64 は 16 桁の16進数",
+			"valid": true,
+			"instance": {
+				"XXH3-64": "0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/XXH3-64",
+			"pointer": "/XXH3-64",
+			"label": "XXH3-64 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"XXH3-64": "0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/XXH3-64",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/XXH3-128",
+			"pointer": "/XXH3-128",
+			"label": "正常: XXH3-128 は 32 桁の16進数",
+			"valid": true,
+			"instance": {
+				"XXH3-128": "0123456789abcdef0123456789abcdef"
+			}
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/XXH3-128",
+			"pointer": "/XXH3-128",
+			"label": "XXH3-128 は桁数不足(1桁少ない)は不可",
+			"valid": false,
+			"instance": {
+				"XXH3-128": "0123456789abcdef0123456789abcde"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/XXH3-128",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-1",
+			"pointer": "/SHA-1",
+			"label": "16進数の大文字は不可(小文字のみ)",
+			"valid": false,
+			"instance": {
+				"SHA-1": "AbCdEf0123456789aBcDeF0123456789ABCDEF01"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA-1",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/MD5",
+			"pointer": "/MD5",
+			"label": "16進数以外の文字(g)は不可",
+			"valid": false,
+			"instance": {
+				"MD5": "gggggggggggggggggggggggggggggggg"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/MD5",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-256",
+			"pointer": "/SHA-256",
+			"label": "桁数超過は不可",
+			"valid": false,
+			"instance": {
+				"SHA-256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA-256",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/MD5",
+			"pointer": "/MD5",
+			"label": "前後の空白は不可",
+			"valid": false,
+			"instance": {
+				"MD5": " 5d41402abc4b2a76b9719d911017c592"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/MD5",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/SHA-256",
+			"pointer": "/SHA-256",
+			"label": "SHA-256 の値に SHA-1 の桁数は不可(種別ごとに桁数が異なる)",
+			"valid": false,
+			"instance": {
+				"SHA-256": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/SHA-256",
+					"keyword": "pattern"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/CRC32-C",
+			"pointer": "/CRC32-C",
+			"label": "文字列でなければならない(数値は不可)",
+			"valid": false,
+			"instance": {
+				"CRC32-C": 12345678
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/CRC32-C",
+					"keyword": "type"
+				}
+			]
+		},
+		{
+			"group": "property",
+			"groupPointer": "/properties/BLAKE3",
+			"pointer": "/BLAKE3",
+			"label": "空文字列は不可",
+			"valid": false,
+			"instance": {
+				"BLAKE3": ""
+			},
+			"expectedErrors": [
+				{
+					"instanceLocation": "/BLAKE3",
+					"keyword": "pattern"
+				}
+			]
+		}
+	]
+}
